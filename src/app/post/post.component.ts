@@ -22,7 +22,7 @@ export class PostComponent {
     let post: any = { title: input.value };
     input.value = '';
     this.http.post(this.url, JSON.stringify(post)).subscribe(response => {
-      post.id = response.json().id;
+      post['id'] = response.json().id;
       //console.log(response.json());
       this.posts.splice(0, 0, post);
     });
@@ -34,5 +34,13 @@ export class PostComponent {
       .subscribe(response => {
         console.log(response);
       });
+  }
+
+  deletePost(post) {
+    this.http.delete(this.url + '/' + post.id).subscribe(response => {
+      let index = this.posts.indexOf('post');
+      //
+      //this.posts.splice(index, 1);
+    });
   }
 }
