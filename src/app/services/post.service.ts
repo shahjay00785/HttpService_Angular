@@ -1,5 +1,6 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,25 @@ export class PostService {
   deletePost(id) {
     return this.http.delete(this.url + '/' + id);
   }
+
+  /*  Before add  Exception Handling
+  getPosts() {
+    return this.http.get(this.url);
+  }
+
+  createPost(post) {
+    return this.http.post(this.url, JSON.stringify(post));
+  }
+
+  updatePost(post) {
+    return this.http.patch(
+      this.url + '/' + post.id,
+      JSON.stringify({ isRead: true })
+    );
+  }
+
+  deletePost(id) {
+    return this.http.delete(this.url + '/' + id);
+  }
+  */
 }

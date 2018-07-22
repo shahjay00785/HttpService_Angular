@@ -12,11 +12,18 @@ export class PostComponent implements OnInit {
   constructor(private service: PostService) {}
 
   ngOnInit() {
-    this.service.getPosts().subscribe(response => {
-      //console.log(response);
-      this.posts = response.json();
-      //console.log(response.json());
-    });
+    this.service.getPosts().subscribe(
+      response => {
+        //console.log(response);
+        this.posts = response.json();
+        //console.log(response.json());
+      },
+      error => {
+        // Toast Notification
+        alert('An Unexpected Error');
+        console.log(error);
+      }
+    );
   }
 
   createPost(input: HTMLInputElement) {
@@ -25,21 +32,50 @@ export class PostComponent implements OnInit {
     this.service.createPost(post).subscribe(response => {
       post['id'] = response.json().id;
       //console.log(response.json());
-      this.posts.splice(0, 0, post);
+      this.posts.splice(0, 0, post),
+        error => {
+          // Toast Notification
+          alert('An Unexpected Error');
+          console.log(error);
+        };
     });
   }
 
+  /*
   updatePost(post) {
     this.service.updatePost(post).subscribe(response => {
-      console.log(response);
+      console.log(response),
+     
+      /*  viloate the Policy of separation here 
+  
+      //(error: Response)// add error repsonse into the service => {
+          // Toast Notification
+          if (error.status == 400) {
+            //this.form.setErros(error.json());
+          } else {
+            alert('An Unexpected Error');
+            console.log(error);
+          }
+        };
     });
   }
+*/
 
   deletePost(post) {
-    this.service.deletePost(post.id).subscribe(response => {
+    this.service.deletePost(4325).subscribe(response => {
       let index = this.posts.indexOf('post');
       //
-      this.posts.splice(index, 1);
+      this.posts.splice(index, 1),
+        (error: Response) => {
+          // Toast Notification
+          if (error.status == 404) {
+            alert('This Post is being Deleted aleready');
+          } else {
+            alert('An Unexpected Error');
+          }
+
+          console.log(error);
+        };
     });
   }
 
